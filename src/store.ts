@@ -1,15 +1,16 @@
-import { combineReducers, createStore } from 'redux'
-import { devToolsEnhancer } from 'redux-devtools-extension'
-import { CounterReducer } from './features/counter'
+import { applyMiddleware, createStore } from 'redux'
+import thunk from 'redux-thunk'
+import { createReducerFunction } from 'immer-reducer'
+import MyImmerReducer, {
+  myImmerReducerInitialState,
+  MyImmerReducerInitialStateInt,
+} from './redux/appReducer'
 
-/* Create root reducer, containing all features of the application */
-const rootReducer = combineReducers({
-  count: CounterReducer,
-})
+export type GlobalState = MyImmerReducerInitialStateInt
 
-const store = createStore(
-  rootReducer,
-  /* preloadedState, */ devToolsEnhancer({})
+const reducerFunction = createReducerFunction(
+  MyImmerReducer,
+  myImmerReducerInitialState
 )
 
-export default store
+export const store = createStore(reducerFunction, applyMiddleware(thunk))
