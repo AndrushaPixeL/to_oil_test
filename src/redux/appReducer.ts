@@ -2,36 +2,12 @@ import { createActionCreators, ImmerReducer } from 'immer-reducer'
 import { IData, News } from './types/types'
 
 export interface MyImmerReducerInitialStateInt {
-  data: IData
   news: Array<News>
   isLoading: boolean
 }
 
 export const myImmerReducerInitialState: MyImmerReducerInitialStateInt = {
-  data: {
-    messages: '',
-    is_seccess: false,
-    data: {
-      articles: [
-        {
-          id: 0,
-          title: '',
-          description: '',
-          created_at: '',
-          author: { name: '', lastname: '' },
-        },
-      ],
-    },
-  },
-  news: [
-    {
-      id: 0,
-      title: '',
-      description: '',
-      created_at: '',
-      author: { name: '', lastname: '' },
-    },
-  ],
+  news: [],
   isLoading: false,
 }
 
@@ -42,6 +18,17 @@ class MyImmerReducer extends ImmerReducer<MyImmerReducerInitialStateInt> {
 
   setIsLoading(isLoading: boolean) {
     this.draftState.isLoading = isLoading
+  }
+
+  addNews(news: News) {
+    this.draftState.news.push(news)
+  }
+
+  deleteNews(id: number) {
+    console.log('REDUCER', id)
+    this.draftState.news = this.draftState.news.filter((el) => {
+      return el.id !== id
+    })
   }
 }
 
