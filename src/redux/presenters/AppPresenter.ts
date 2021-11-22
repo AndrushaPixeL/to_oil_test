@@ -2,7 +2,7 @@ import { useEffect, useCallback, useMemo } from 'react'
 import { useDispatch } from 'react-redux'
 import { useMappedState } from 'redux-react-hook'
 import { GlobalState } from '../../store'
-import { MyImmerActionCreater } from '../appReducer'
+import { MyImmerActionCreator } from '../appReducer'
 import { fetchData } from '../thunk/loadData'
 import { News } from '../types/types'
 
@@ -27,10 +27,10 @@ function useEventHandlers() {
   const eventHandlers = useMemo(
     () => ({
       handleAddNews: (newNews: News) => {
-        dispatch(MyImmerActionCreater.addNews(newNews))
+        dispatch(MyImmerActionCreator.addNews(newNews))
       },
       handleDeleteNews: (id: number) => {
-        dispatch(MyImmerActionCreater.deleteNews(id))
+        dispatch(MyImmerActionCreator.deleteNews(id))
       },
     }),
     []

@@ -3,7 +3,7 @@ import React from 'react'
 import { CircularProgress, Typography } from '@mui/material'
 import CardNews from '../../components/CardNews/CardNews'
 import { useAppPresenter } from '../../redux/presenters/AppPresenter'
-import AddNews from '../../components/AddNews/AddNews'
+import AddNewsModal from '../../components/AddNewsModal/AddNewsModal'
 import './Home.scss'
 
 export const Home: React.FC = () => {
@@ -13,9 +13,9 @@ export const Home: React.FC = () => {
       <Typography gutterBottom variant="h5" component="div">
         {`Количество новостей: ${values.news.length}`}
       </Typography>
-      <AddNews />
+      <AddNewsModal />
       {values.isLoading ? (
-        <div className="home_propgress">
+        <div className="home_progress">
           <CircularProgress />
         </div>
       ) : (

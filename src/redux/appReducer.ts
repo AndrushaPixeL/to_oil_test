@@ -31,6 +31,6 @@ class MyImmerReducer extends ImmerReducer<MyImmerReducerInitialStateInt> {
   }
 }
 
-export const MyImmerActionCreater = createActionCreators(MyImmerReducer)
+export const MyImmerActionCreator = createActionCreators(MyImmerReducer)
 
 export default MyImmerReducer

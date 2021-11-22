@@ -5,8 +5,7 @@ import Typography from '@mui/material/Typography'
 import Modal from '@mui/material/Modal'
 import { useForm, Controller, SubmitHandler, FieldError } from 'react-hook-form'
 import { useAppPresenter } from '../../redux/presenters/AppPresenter'
-import { News } from '../../redux/types/types'
-import './AddNews.scss'
+import './AddNewsModal.scss'
 
 const defaultValues = {
   name: '',
@@ -22,7 +21,7 @@ type FormValues = {
   description: string
 }
 
-export default function AddNews() {
+export default function AddNewsModal() {
   const { eventHandlers } = useAppPresenter()
   const [open, setOpen] = React.useState(false)
   const handleOpen = () => setOpen(true)
@@ -30,37 +29,46 @@ export default function AddNews() {
   const { handleSubmit, control, reset } = useForm<FormValues>({
     defaultValues,
   })
-  const newNewsData: News = {
-    id: 0,
-    title: '',
-    description: '',
-    created_at: '',
-    author: {
-      name: '',
-      lastname: '',
-    },
-  }
+
   const onSubmit: SubmitHandler<FormValues> = (data) => {
-    newNewsData.id = Date.now() + Math.random() * 100
-    newNewsData.title = data.title
-    newNewsData.description = data.description
-    newNewsData.created_at = new Date(
+    const id = Date.now() + Math.random() * 100
+
+    const createdAt = new Date(
       `${new Date().toString().split('GMT')[0]} UTC`
     ).toISOString()
-    newNewsData.author.name = data.name
-    newNewsData.author.lastname = data.lastName
-    eventHandlers.handleAddNews(newNewsData)
+
+    const nextData = {
+      id,
+      created_at: createdAt,
+      title: data.title,
+      description: data.description,
+      author: {
+        name: data.name,
+        lastname: data.lastName,
+      },
+    }
+
+    eventHandlers.handleAddNews(nextData)
     handleClose()
     reset(defaultValues)
   }
+
   const classNames = (err: FieldError | undefined) => {
     let classNameValid = ''
-    if (err) {
-      if (err.ref?.name === 'description') {
+    const name = err?.ref?.name
+    switch (name) {
+      case 'description': {
         classNameValid = 'textarea_invalid'
-      } else classNameValid = 'validate invalid'
-    } else {
-      classNameValid = ''
+        break
+      }
+      case undefined: {
+        classNameValid = ''
+        break
+      }
+      default: {
+        classNameValid = 'validate invalid'
+        break
+      }
     }
     return classNameValid
   }
@@ -161,6 +169,13 @@ export default function AddNews() {
             </div>
             <Button variant="outlined" type="submit">
               Добавить новость
+            </Button>
+            <Button
+              variant="outlined"
+              type="button"
+              onClick={() => reset(defaultValues)}
+            >
+              Сброс
             </Button>
           </form>
         </div>
