@@ -4,6 +4,7 @@ import { useMappedState } from 'redux-react-hook'
 import { GlobalState } from '../../store'
 import { MyImmerActionCreater } from '../appReducer'
 import { fetchData } from '../thunk/loadData'
+import { News } from '../types/types'
 
 function useInitialization() {
   const dispatch = useDispatch()
@@ -25,20 +26,8 @@ function useEventHandlers() {
   const dispatch = useDispatch()
   const eventHandlers = useMemo(
     () => ({
-      handleAddNews: () => {
-        dispatch(
-          MyImmerActionCreater.addNews({
-            id: 1,
-            title: 'Voluptate',
-            description:
-              'Quisquam et doloremque. Eligendi quo possimus. Non quia aut.',
-            created_at: '2020-10-01T07:17:52.000Z',
-            author: {
-              name: 'Иван',
-              lastname: 'Иванов',
-            },
-          })
-        )
+      handleAddNews: (newNews: News) => {
+        dispatch(MyImmerActionCreater.addNews(newNews))
       },
       handleDeleteNews: (id: number) => {
         dispatch(MyImmerActionCreater.deleteNews(id))
@@ -46,7 +35,6 @@ function useEventHandlers() {
     }),
     []
   )
-
   return eventHandlers
 }
 export function useAppPresenter() {

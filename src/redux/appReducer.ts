@@ -25,7 +25,6 @@ class MyImmerReducer extends ImmerReducer<MyImmerReducerInitialStateInt> {
   }
 
   deleteNews(id: number) {
-    console.log('REDUCER', id)
     this.draftState.news = this.draftState.news.filter((el) => {
       return el.id !== id
     })

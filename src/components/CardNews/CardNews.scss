@@ -1,0 +1,12 @@
+.news_header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.card_wrapper {
+    min-width: 100%;
+    :hover {
+        background-color: #d3faff;
+    }
+}
